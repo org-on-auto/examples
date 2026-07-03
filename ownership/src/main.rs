@@ -41,7 +41,7 @@ fn main() {
 
     // slices
     println!("=======================================");
-    // ...
+    slices()
 }
 
 fn print_ownership_rules() {
@@ -113,4 +113,32 @@ fn print_reference_rules() {
     println!("---- The Rules of References ----");
     println!("1. At any given time, you can either have one mutable or any number of immutable references");
     println!("2. References must always be valid");
+}
+
+fn slices() {
+    let mut s = String::from("hello world");
+    let hello = &s[0..5];
+    let world = &s[6..11];
+    println!("Slice 1: {} Slice 2: {}", hello, world);
+
+    let hello = &s[..5]; // from start
+    let world = &s[6..]; // till end
+    println!("Slice 1: {} Slice 2: {}", hello, world);
+
+    fn first_word(s: &str) -> &str {
+        let bytes = s.as_bytes();
+
+        for (i, &item) in bytes.iter().enumerate() {
+            if item == b' ' {
+                return &s[0..i];
+            }
+        }
+        return &s[..];
+    }
+    let s2 = "hello world";
+    let word = first_word(&s2);
+    println!("First word is: {}", word);
+
+    let arr = [1, 2, 3, 4, 5];
+    let slice = &arr[0..2];
 }
